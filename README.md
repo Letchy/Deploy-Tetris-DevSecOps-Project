@@ -1,5 +1,9 @@
 # Deploy-Tetris-DevSecOps-Project
 
+This project is designed to deploy a Tetris game application on an EKS cluster (Amazon EC2), incorporating best practices for security and automation.
+
+# Deploy-Tetris-DevSecOps-Project
+
 <-- https://medium.com/@navidehbaghaifar/how-to-install-jenkins-on-an-ec2-with-terraform-d5e9ed3cdcd9 -->
 
 # This project is designed to deploy a Tetris game application on an EKS cluster (Amazon EC2), incorporating best practices for security and automation.
