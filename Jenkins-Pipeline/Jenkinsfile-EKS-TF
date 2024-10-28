@@ -1,0 +1,104 @@
+properties([
+    parameters([
+        string(defaultValue: 'variables.tfvars', description: 'Specify the file name', name: 'File-Name'),
+        choice(choices: ['apply', 'destroy'], description: 'Select Terraform action', name: 'Terraform-Action')
+    ])
+])
+
+        pipeline {
+    agent any  // Use any available agent for the pipeline
+
+    stages {
+        stage('Checkout from Git') {
+            steps {
+                // Use Git to clone the repository with the specified credentials
+                git credentialsId: 'github-token', branch: 'master', url: 'https://github.com/Letchy/Deploy-Tetris-DevSecOps-Project.git'
+            }
+        }
+
+        stage('Initializing Terraform') {
+            steps {
+                withAWS(credentials: 'aws-key', region: 'eu-west-2') {
+                    dir('EKS-TF') {
+                        script {
+                            sh 'terraform init'
+                        }
+                    }
+                }
+            }
+        }
+        
+        // Add other stages here as needed
+    }
+    
+    post {
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed!'
+        }
+    }
+}
+        stage('Validate Terraform Code') {
+            steps {
+                withAWS(credentials: 'aws-key', region: 'eu-west-2') {
+                dir('EKS-TF') {
+                    script {
+                        sh 'terraform validate'
+                    }
+                }
+                }
+            }
+        }
+        stage('Terraform Plan') {
+            steps {
+                withAWS(credentials: 'aws-key', region: 'eu-west-2') {
+                dir('EKS-TF') {
+                    script {
+                        sh "terraform plan -var-file=${params.'File-Name'}"
+                    }
+                }
+                }
+            }
+        }
+        stage('Terraform Action') {
+            steps {
+                withAWS(credentials: 'aws-key', region: 'eu-west-2') { 
+                script {
+                    echo "${params.'Terraform-Action'}"
+                    dir('EKS-TF') {
+                        script {
+                            if (params.'Terraform-Action' == 'apply') {
+                                sh "terraform apply -auto-approve -var-file=${params.'File-Name'}"
+                            } else if (params.'Terraform-Action' == 'destroy') {
+                                sh "terraform destroy -auto-approve -var-file=${params.'File-Name'}"
+                            } else {
+                                error "Invalid value for Terraform-Action: ${params.'Terraform-Action'}"
+                            }
+                        }
+                    }
+                }
+                }
+            }
+        }
+
+/*pipeline {
+    agent any
+    stages {
+        stage('Checkout from Git') {
+            steps {
+                git branch: 'master', url: 'https://github.com/Letchy/Deploy-Tetris-DevSecOps-Project'
+            }
+        }
+        stage('Initializing Terraform') {
+            steps {
+                withAWS(credentials: 'aws-key', region: 'eu-west-2') {
+                dir('EKS-TF') {
+                    script {
+                        sh 'terraform init'
+                    }
+                }
+                }
+            }
+        } */

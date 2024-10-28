@@ -1,38 +1,26 @@
 # Create Jenkins Security Group Resource 
-resource "aws_security_group" "jenkins_sg01" {
-  name        = "jenkins_sg01"
-  description = "Allow inbound ports 22, 8080"
-  vpc_id      = "vpc-0075706e9aae9bc68"
+resource "aws_security_group" "jenkins_sg" {
+  name        = "jenkins_security_group"
+  description = "Allow SSH and HTTP traffic"
 
-  #Allow incoming TCP requests on port 22 from any IP
   ingress {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  #Allow incoming TCP requests on port 443 from any IP
-  ingress {
-    description = "Allow HTTPS Traffic"
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["0.0.0.0/0"] # Allow SSH access from anywhere (be cautious with this in production)
   }
 
-  #Allow incoming TCP requests on port 8080 from any IP
   ingress {
-    from_port   = 8080
+    from_port   = 8080 # Port for Jenkins
     to_port     = 8080
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["0.0.0.0/0"] # Allow access to Jenkins from anywhere
   }
 
-  #Allow all outbound requests
   egress {
     from_port   = 0
     to_port     = 0
-    protocol    = "-1"
+    protocol    = "-1" # Allow all outbound traffic
     cidr_blocks = ["0.0.0.0/0"]
   }
 }

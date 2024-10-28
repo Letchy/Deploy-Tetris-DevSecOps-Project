@@ -4,7 +4,7 @@ variable "rt-name" {}
 variable "subnet-name" {}
 variable "sg-name" {}
 variable "instance-name" {}
-variable "key-name" {}
+# variable "key-name" {}
 variable "iam-role" {}
 
 variable "aws_region" {
