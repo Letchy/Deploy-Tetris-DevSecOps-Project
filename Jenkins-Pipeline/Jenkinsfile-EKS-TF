@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('Checkout from Git') {
             steps {
-                git credentialsId: 'github-token', branch: 'main', url: 'https://github.com/Letchy/Deploy-Tetris-DevSecOps-Project'
+                git credentialsId: 'github-token', branch: 'main', url: 'https://github.com/Letchy/Deploy-Tetris-DevSecOps-Project/EKS-TF-Code.git'
             }
         }
         stage('Initializing Terraform') {
