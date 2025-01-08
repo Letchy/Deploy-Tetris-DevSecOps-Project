@@ -1,6 +1,6 @@
 # Deploy-Tetris-DevSecOps-Project
 
-This project demonstrates use of modern DevOps tooling to deploy the Tetris application to an Amazon EKS cluster, incorporating best practices for security and automation in line with DevSecOps best practices.
+This project demonstrates use of modern DevOps tooling to deploy the Tetris application to an Amazon EKS cluster, incorporating DevSecOps best practices for overall security and infrastructure automation.
 
 https://medium.com/@navidehbaghaifar/how-to-install-jenkins-on-an-ec2-with-terraform-d5e9ed3cdcd9
 
