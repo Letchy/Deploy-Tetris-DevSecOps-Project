@@ -39,7 +39,7 @@ The pipeline includes:
 
 - **Security-First Approach**:  
   - Vulnerability scanning with Trivy integrated at multiple stages of the pipeline.  
-  - Runtime security monitoring with Falco to detect unauthorised or suspicious activity in the cluster.
+  <!-- - Runtime security monitoring with Falco to detect unauthorised or suspicious activity in the cluster. -->
 
 - **Code Quality Assurance**:  
   - Ensures clean, maintainable, and reliable code using SonarQube.
